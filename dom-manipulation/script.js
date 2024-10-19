@@ -22,8 +22,9 @@ function saveQuotes() {
     localStorage.setItem('quotes', JSON.stringify(quotes));
 }
 
-// Simulate fetching quotes from the server
-function fetchServerQuotes() {
+// Function to fetch quotes from the server
+async function fetchQuotesFromServer() {
+    // Simulating a network request with a promise
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(mockServerData);
@@ -33,7 +34,7 @@ function fetchServerQuotes() {
 
 // Check for updates from the server
 async function checkForUpdates() {
-    const serverQuotes = await fetchServerQuotes();
+    const serverQuotes = await fetchQuotesFromServer(); // Using the new function
     resolveConflicts(serverQuotes);
 }
 
@@ -195,6 +196,16 @@ function importFromJsonFile(event) {
 // Event listeners
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 document.getElementById('exportQuotes').addEventListener('click', exportQuotes); // Attach export event
+
+async function fetchQuotesFromServer() {
+    // Simulating a network request with a promise
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(mockServerData);
+        }, 1000);
+    });
+}
+
 
 // Initialize the application
 loadQuotes();

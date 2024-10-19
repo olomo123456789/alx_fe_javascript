@@ -248,6 +248,8 @@ async function syncQuotes() {
     showNotification("Quotes synchronized with server.");
 }
 
+showNotification("Quotes synced with server!"); // Display the notification
+
 
 
 // Initialize the application

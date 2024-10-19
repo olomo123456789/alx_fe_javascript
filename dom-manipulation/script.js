@@ -51,6 +51,37 @@ function resolveConflicts(serverQuotes) {
     showNotification("Quotes updated from server.");
 }
 
+// Function to create and display the add quote form
+function createAddQuoteForm() {
+    const container = document.getElementById('addQuoteContainer');
+    container.innerHTML = ''; // Clear existing content
+
+    const form = document.createElement('form');
+    form.onsubmit = function (event) {
+        event.preventDefault(); // Prevent form submission
+        addQuote();
+    };
+
+    const quoteInput = document.createElement('input');
+    quoteInput.id = 'newQuoteText';
+    quoteInput.type = 'text';
+    quoteInput.placeholder = 'Enter a new quote';
+    form.appendChild(quoteInput);
+
+    const categoryInput = document.createElement('input');
+    categoryInput.id = 'newQuoteCategory';
+    categoryInput.type = 'text';
+    categoryInput.placeholder = 'Enter quote category';
+    form.appendChild(categoryInput);
+
+    const addButton = document.createElement('button');
+    addButton.type = 'submit';
+    addButton.textContent = 'Add Quote';
+    form.appendChild(addButton);
+
+    container.appendChild(form);
+}
+
 // Function to display a random quote
 function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -123,9 +154,9 @@ function showNotification(message) {
 
 // Event listeners
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-document.getElementById('addQuoteBtn').addEventListener('click', addQuote);
 
 // Initialize the application
 loadQuotes();
 populateCategories();
+createAddQuoteForm(); // Create the add quote form
 setInterval(checkForUpdates, 10000); // Check for updates every 10 seconds

@@ -157,12 +157,16 @@ function exportQuotes() {
     const dataStr = JSON.stringify(quotes, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
+    
+    const fileDetails = ["quotes.json", "application/json"]; // Using ["file", "type"]
+
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'quotes.json';
+    a.download = fileDetails[0]; // Filename
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    URL.revokeObjectURL(url); // Clean up the URL object
     showNotification("Quotes exported successfully!");
 }
 

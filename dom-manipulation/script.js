@@ -152,8 +152,23 @@ function showNotification(message) {
     }, 3000);
 }
 
+// Function to export quotes as a JSON file
+function exportQuotes() {
+    const dataStr = JSON.stringify(quotes, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'quotes.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showNotification("Quotes exported successfully!");
+}
+
 // Event listeners
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
+document.getElementById('exportQuotes').addEventListener('click', exportQuotes); // New event listener for exporting quotes
 
 // Initialize the application
 loadQuotes();

@@ -207,7 +207,32 @@ async function fetchQuotesFromServer() {
         }, 1000);
     });
 }
-const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+
+async function fetchPosts() {
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    }
+}
+
+// Call the function to fetch posts
+fetchPosts();
+
+
+async function postQuoteToServer(quote) {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST", // Setting the request method to POST
+        headers: {
+            "Content-Type": "application/json" // Setting the Content-Type header
+        },
+        body: JSON.stringify(quote) // Sending the quote as JSON
+    });
+    return await response.json(); // Return the response from the server
+}
+
 
 
 // Initialize the application

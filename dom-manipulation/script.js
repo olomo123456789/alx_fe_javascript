@@ -234,6 +234,21 @@ async function postQuoteToServer(quote) {
 }
 
 
+async function syncQuotes() {
+    const serverQuotes = await fetchQuotesFromServer(); // Fetch latest quotes from server
+    const existingQuotes = quotes.map(q => q.text);
+    
+    serverQuotes.forEach(serverQuote => {
+        if (!existingQuotes.includes(serverQuote.text)) {
+            quotes.push(serverQuote); // Add new quote from server
+        }
+    });
+
+    saveQuotes(); // Save updated quotes to local storage
+    showNotification("Quotes synchronized with server.");
+}
+
+
 
 // Initialize the application
 loadQuotes();

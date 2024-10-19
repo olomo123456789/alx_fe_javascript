@@ -197,6 +197,8 @@ function importFromJsonFile(event) {
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 document.getElementById('exportQuotes').addEventListener('click', exportQuotes); // Attach export event
 
+
+
 async function fetchQuotesFromServer() {
     // Simulating a network request with a promise
     return new Promise((resolve) => {
@@ -205,6 +207,7 @@ async function fetchQuotesFromServer() {
         }, 1000);
     });
 }
+const response = await fetch("https://jsonplaceholder.typicode.com/posts");
 
 
 // Initialize the application

@@ -158,11 +158,11 @@ function exportQuotes() {
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     
-    const fileDetails = ["quotes.json", "application/json"]; // Using ["file", "type"]
+    const exportDetails = ["quotes.json", "application/json"]; // ["file"]
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = fileDetails[0]; // Filename
+    a.download = exportDetails[0]; // Filename
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -170,9 +170,31 @@ function exportQuotes() {
     showNotification("Quotes exported successfully!");
 }
 
+// Function to import quotes from a JSON file
+function importFromJsonFile(event) {
+    const file = event.target.files[0]; // Using FileReader
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader(); // Using FileReader
+    reader.onload = function (e) {
+        try {
+            const importedQuotes = JSON.parse(e.target.result); // Using onload
+            quotes = importedQuotes; // Update quotes array with imported quotes
+            saveQuotes(); // Save the new quotes to local storage
+            populateCategories(); // Update categories
+            showNotification("Quotes imported successfully!");
+        } catch (error) {
+            showNotification("Failed to import quotes: " + error.message);
+        }
+    };
+    reader.readAsText(file); // Using readAsText
+}
+
 // Event listeners
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-document.getElementById('exportQuotes').addEventListener('click', exportQuotes); // New event listener for exporting quotes
+document.getElementById('exportQuotes').addEventListener('click', exportQuotes); // Attach export event
 
 // Initialize the application
 loadQuotes();
